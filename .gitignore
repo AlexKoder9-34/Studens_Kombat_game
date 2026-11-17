@@ -1,0 +1,47 @@
+# Unity: кэш, временные файлы и локальные настройки
+.utmp/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emory[Cc]aptures/
+/[Rr]ecordings/
+*.log
+
+# Rider: не добавлять настройки IDE
+.idea/
+*.DotSettings.user
+
+# Файлы проектов и решений, которые Unity генерирует для IDE
+ExportedObj/
+.consulo/
+.vs/
+.gradle/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.sln.iml
+*.suo
+*.tmp
+*.user
+*.userprefs
+
+# Автоматически созданный плагин Rider для Unity
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Файлы сбоев и сборок
+sysinfo.txt
+.dirstamp
+mono_crash.*
+tmpinst-dir.stamp
+/*_BackUpThisFolder_ButDontShipItWithYourGame/
+/*_BurstDebugInformation_DoNotShip/
+*.apk
+*.aab
+*.obb
+*.app
+*.unitypackage
