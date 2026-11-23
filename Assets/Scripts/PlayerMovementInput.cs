@@ -1,16 +1,45 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovementInput : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private GameplayInputActions _gameplayInputActions;
+    private IControllable _controllable;
+
+    private void Awake()
     {
-        
+        _gameplayInputActions = new GameplayInputActions();
+        _controllable = GetComponent<IControllable>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReadMove(InputAction.CallbackContext context)
     {
-        
+        var moveInput = _gameplayInputActions.Player.Move.ReadValue<Vector2>();
+        Vector3 controlDirection = new Vector3(-moveInput.x, 0, 0);
+        _controllable.Move(controlDirection);
+    }
+
+    public void ReadJump(InputAction.CallbackContext context)
+    {
+        _controllable.Jump();
+    }
+    
+    private void OnEnable()
+    {
+        _gameplayInputActions.Player.Jump.performed += ReadJump;
+        _gameplayInputActions.Player.Jump.canceled += ReadJump;
+        _gameplayInputActions.Player.Move.performed += ReadMove;
+        _gameplayInputActions.Player.Move.canceled += ReadMove;
+        _gameplayInputActions.Enable();
+    }
+
+    void OnDisable()
+    {
+        _gameplayInputActions.Player.Jump.performed -= ReadJump;
+        _gameplayInputActions.Player.Jump.canceled -= ReadJump;
+        _gameplayInputActions.Player.Move.performed -= ReadMove;
+        _gameplayInputActions.Player.Move.canceled -= ReadMove;
+        _gameplayInputActions.Disable();
     }
 }

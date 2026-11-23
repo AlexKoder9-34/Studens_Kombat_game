@@ -1007,13 +1007,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1405874403547106476, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1405874403547106476, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
+      propertyPath: jumpHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1405874403547106476, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
+      propertyPath: gravityForce
+      value: -9.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2056548133995063025, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2056548133995063025, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
+      propertyPath: m_Center.y
+      value: 0.582
+      objectReference: {fileID: 0}
     - target: {fileID: 6107793310268844121, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 37.783
+      value: 37.759
       objectReference: {fileID: 0}
     - target: {fileID: 6107793310268844121, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.67
+      value: 8.932
       objectReference: {fileID: 0}
     - target: {fileID: 6107793310268844121, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
       propertyPath: m_LocalPosition.z
