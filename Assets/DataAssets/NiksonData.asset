@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68523ec753614e98a1a3486fdb00470f, type: 3}
-  m_Name: Nikson
+  m_Name: NiksonData
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.PlayerSO
-  characterName: AlexFeed
+  characterName: Nikson
   maxHealth: 100
   damage: 3
+  critDamage: 5
+  moveSpeed: 0.5
+  jumpHeight: 0.5

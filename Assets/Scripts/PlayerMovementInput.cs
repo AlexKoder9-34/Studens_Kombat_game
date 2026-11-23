@@ -13,14 +13,14 @@ public class PlayerMovementInput : MonoBehaviour
         _controllable = GetComponent<IControllable>();
     }
 
-    public void ReadMove(InputAction.CallbackContext context)
+    private void ReadMove(InputAction.CallbackContext context)
     {
         var moveInput = _gameplayInputActions.Player.Move.ReadValue<Vector2>();
         Vector3 controlDirection = new Vector3(-moveInput.x, 0, 0);
         _controllable.Move(controlDirection);
     }
 
-    public void ReadJump(InputAction.CallbackContext context)
+    private void ReadJump(InputAction.CallbackContext context)
     {
         _controllable.Jump();
     }
@@ -34,7 +34,7 @@ public class PlayerMovementInput : MonoBehaviour
         _gameplayInputActions.Enable();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         _gameplayInputActions.Player.Jump.performed -= ReadJump;
         _gameplayInputActions.Player.Jump.canceled -= ReadJump;

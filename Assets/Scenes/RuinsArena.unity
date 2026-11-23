@@ -1016,6 +1016,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1405874403547106476, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 36f300bb6b92e7b4cb84c17a3a6d7475, type: 2}
+    - target: {fileID: 1405874403547106476, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
       propertyPath: gravityForce
       value: -9.8
       objectReference: {fileID: 0}
@@ -1033,7 +1037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6107793310268844121, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.932
+      value: 8.69
       objectReference: {fileID: 0}
     - target: {fileID: 6107793310268844121, guid: 86c1ed38cd34c594c9d0421bf9c87ff4, type: 3}
       propertyPath: m_LocalPosition.z

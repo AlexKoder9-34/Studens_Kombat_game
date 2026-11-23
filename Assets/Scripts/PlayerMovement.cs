@@ -1,20 +1,28 @@
+using ScriptableObjects;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour, IControllable
 {
+    [SerializeField] private PlayerData playerData;
     [SerializeField] private float verticalVelocity;
     [SerializeField] private float gravityForce;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpHeight;
-        
+    
+    private float _moveSpeed;
+    private float _jumpHeight;
+    
     private CharacterController _controller;
     private Vector3 _moveDirection;
+    private Animator _playerAnimator;
         
         
     private void Awake()
     {
+        _playerAnimator = GetComponent<Animator>();
         _controller  = GetComponent<CharacterController>();
+        
+        _moveSpeed = playerData.MoveSpeed;
+        _jumpHeight = playerData.JumpHeight;
     }
 
     void Update()
@@ -30,7 +38,7 @@ public class PlayerMovement : MonoBehaviour, IControllable
 
     private void MovePlayer()
     {
-        Vector3 movement = _moveDirection * moveSpeed;
+        Vector3 movement = _moveDirection * _moveSpeed;
 
         movement.y = verticalVelocity;
             
@@ -52,18 +60,18 @@ public class PlayerMovement : MonoBehaviour, IControllable
     {
         if (_controller.isGrounded)
         {
-            verticalVelocity = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
+            verticalVelocity = Mathf.Sqrt(_jumpHeight * -2 * gravityForce);
         }
     }
     private void RotatePlayer()
     {
         if (_moveDirection.x > 0)
         {
-            transform.rotation = Quaternion.Euler(0,90,0);
+            _playerAnimator.Play("Walk_B");
         }
         else if (_moveDirection.x < 0)
         {
-            transform.rotation = Quaternion.Euler(0,-90,0);
+            _playerAnimator.Play("Walk_F");
         }
     }
 }
