@@ -67,18 +67,30 @@ public class PlayerMovement : MonoBehaviour, IControllable
     {
         if (_moveDirection.x > 0)
         {
-            _playerAnimator.SetInteger("GoBack", 1);
-            _playerAnimator.SetInteger("GoFoward", 0);
+            _playerAnimator.SetInteger("GoBack", 0);
+            _playerAnimator.SetInteger("GoFoward", 1);
         }
         else if (_moveDirection.x < 0)
         {
-            _playerAnimator.SetInteger("GoBack", 0);
-            _playerAnimator.SetInteger("GoFoward", 1);
+            _playerAnimator.SetInteger("GoBack", 1);
+            _playerAnimator.SetInteger("GoFoward", 0);
         }
         else
         {
             _playerAnimator.SetInteger("GoBack", 0);
             _playerAnimator.SetInteger("GoFoward", 0);
+        }
+    }
+
+    private void Dash()
+    {
+        if (_moveDirection.x > 0)
+        {
+            
+        }
+        else if (_moveDirection.x < 0)
+        {
+            
         }
     }
 }
