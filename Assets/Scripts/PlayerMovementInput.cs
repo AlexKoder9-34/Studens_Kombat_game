@@ -24,6 +24,11 @@ public class PlayerMovementInput : MonoBehaviour
     {
         _controllable.Jump();
     }
+
+    private void ReadSprint(InputAction.CallbackContext context)
+    {
+        _controllable.Sprint();
+    }
     
     private void OnEnable()
     {
@@ -32,6 +37,11 @@ public class PlayerMovementInput : MonoBehaviour
         
         _gameplayInputActions.Player.Move.performed += ReadMove;
         _gameplayInputActions.Player.Move.canceled += ReadMove;
+        
+        _gameplayInputActions.Player.Sprint.performed += ReadSprint;
+        _gameplayInputActions.Player.Sprint.performed += ReadMove;
+        _gameplayInputActions.Player.Sprint.canceled += ReadSprint;
+        _gameplayInputActions.Player.Sprint.canceled += ReadMove;
         
         _gameplayInputActions.Enable();
     }
@@ -44,6 +54,12 @@ public class PlayerMovementInput : MonoBehaviour
         _gameplayInputActions.Player.Move.performed -= ReadMove;
         _gameplayInputActions.Player.Move.canceled -= ReadMove;
         
+        _gameplayInputActions.Player.Sprint.performed -= ReadSprint;
+        _gameplayInputActions.Player.Sprint.performed -= ReadMove;
+        _gameplayInputActions.Player.Sprint.canceled -= ReadSprint;
+        _gameplayInputActions.Player.Sprint.canceled -= ReadMove;
+        
         _gameplayInputActions.Disable();
     }
+    
 }

@@ -10,6 +10,7 @@ namespace ScriptableObjects
        [SerializeField] private float damage;
        [SerializeField] private float critDamage;
        [SerializeField] private float moveSpeed;
+       [SerializeField] private float speedBoost;
        [SerializeField] private float jumpHeight;
         
         public string CharacterName => characterName;
@@ -17,6 +18,7 @@ namespace ScriptableObjects
         public float Damage => damage;
         public float CritDamage => critDamage;
         public float MoveSpeed => moveSpeed;
+        public float SpeedBoost => speedBoost;
         public float JumpHeight => jumpHeight;
     }
 }

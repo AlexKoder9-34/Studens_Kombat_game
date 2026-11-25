@@ -8,8 +8,11 @@ public class PlayerMovement : MonoBehaviour, IControllable
     [SerializeField] private float verticalVelocity;
     [SerializeField] private float gravityForce;
     
+    private float _beginMoveSpeed;
     private float _moveSpeed;
+    private float _speedBoost;
     private float _jumpHeight;
+    private bool _isSprinting;
     
     private CharacterController _controller;
     private Vector3 _moveDirection;
@@ -21,8 +24,10 @@ public class PlayerMovement : MonoBehaviour, IControllable
         _playerAnimator = GetComponent<Animator>();
         _controller  = GetComponent<CharacterController>();
         
-        _moveSpeed = playerData.MoveSpeed;
+        _speedBoost = playerData.SpeedBoost;
+        _beginMoveSpeed = playerData.MoveSpeed;
         _jumpHeight = playerData.JumpHeight;
+        _moveSpeed = _beginMoveSpeed;
     }
 
     void Update()
@@ -43,7 +48,7 @@ public class PlayerMovement : MonoBehaviour, IControllable
         movement.y = verticalVelocity;
             
         _controller.Move(movement * Time.deltaTime);
-        RotatePlayer();
+        AnimateMoving();
     }
         
     private void DoGravity()
@@ -63,34 +68,47 @@ public class PlayerMovement : MonoBehaviour, IControllable
             verticalVelocity = Mathf.Sqrt(_jumpHeight * -2 * gravityForce);
         }
     }
-    private void RotatePlayer()
+    private void AnimateMoving()
     {
         if (_moveDirection.x > 0)
         {
-            _playerAnimator.SetInteger("GoBack", 0);
-            _playerAnimator.SetInteger("GoFoward", 1);
+            if (_isSprinting)
+            {
+                _playerAnimator.SetInteger("RunBack", 0);
+                _playerAnimator.SetInteger("RunFoward", 1);
+            }
+            else
+            {
+                _playerAnimator.SetInteger("GoBack", 0);
+                _playerAnimator.SetInteger("GoFoward", 1);
+            }
         }
         else if (_moveDirection.x < 0)
         {
-            _playerAnimator.SetInteger("GoBack", 1);
-            _playerAnimator.SetInteger("GoFoward", 0);
+            if (_isSprinting)
+            {
+                _playerAnimator.SetInteger("RunBack", 1);
+                _playerAnimator.SetInteger("RunFoward", 0);
+            }
+            else
+            {
+                _playerAnimator.SetInteger("GoBack", 1);
+                _playerAnimator.SetInteger("GoFoward", 0);
+            }
         }
         else
         {
+            _moveSpeed = _beginMoveSpeed;
             _playerAnimator.SetInteger("GoBack", 0);
             _playerAnimator.SetInteger("GoFoward", 0);
+            _playerAnimator.SetInteger("RunBack", 0);
+            _playerAnimator.SetInteger("RunFoward", 0);
         }
     }
 
-    private void Dash()
+    public void Sprint()
     {
-        if (_moveDirection.x > 0)
-        {
-            
-        }
-        else if (_moveDirection.x < 0)
-        {
-            
-        }
+        _isSprinting = !_isSprinting;
+        _moveSpeed *= _speedBoost;
     }
 }
