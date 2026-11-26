@@ -17,4 +17,5 @@ MonoBehaviour:
   damage: 3
   critDamage: 5
   moveSpeed: 0.5
+  speedBoost: 4
   jumpHeight: 0.5

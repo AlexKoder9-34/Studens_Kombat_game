@@ -33,15 +33,12 @@ public class PlayerMovementInput : MonoBehaviour
     private void OnEnable()
     {
         _gameplayInputActions.Player.Jump.performed += ReadJump;
-        _gameplayInputActions.Player.Jump.canceled += ReadJump;
         
         _gameplayInputActions.Player.Move.performed += ReadMove;
         _gameplayInputActions.Player.Move.canceled += ReadMove;
         
         _gameplayInputActions.Player.Sprint.performed += ReadSprint;
-        _gameplayInputActions.Player.Sprint.performed += ReadMove;
-        _gameplayInputActions.Player.Sprint.canceled += ReadSprint;
-        _gameplayInputActions.Player.Sprint.canceled += ReadMove;
+        _gameplayInputActions.Player.Sprint.canceled += CancelSprint;
         
         _gameplayInputActions.Enable();
     }
@@ -49,17 +46,19 @@ public class PlayerMovementInput : MonoBehaviour
     private void OnDisable()
     {
         _gameplayInputActions.Player.Jump.performed -= ReadJump;
-        _gameplayInputActions.Player.Jump.canceled -= ReadJump;
         
         _gameplayInputActions.Player.Move.performed -= ReadMove;
         _gameplayInputActions.Player.Move.canceled -= ReadMove;
         
         _gameplayInputActions.Player.Sprint.performed -= ReadSprint;
-        _gameplayInputActions.Player.Sprint.performed -= ReadMove;
-        _gameplayInputActions.Player.Sprint.canceled -= ReadSprint;
-        _gameplayInputActions.Player.Sprint.canceled -= ReadMove;
+        _gameplayInputActions.Player.Sprint.canceled -= CancelSprint;
         
         _gameplayInputActions.Disable();
+    }
+
+    private void CancelSprint(InputAction.CallbackContext context)
+    {
+        _controllable.StopSprint();
     }
     
 }

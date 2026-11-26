@@ -7,9 +7,9 @@ public class PlayerMovement : MonoBehaviour, IControllable
     [SerializeField] private PlayerData playerData;
     [SerializeField] private float verticalVelocity;
     [SerializeField] private float gravityForce;
+    [SerializeField] private float moveSpeed;
     
     private float _beginMoveSpeed;
-    private float _moveSpeed;
     private float _speedBoost;
     private float _jumpHeight;
     private bool _isSprinting;
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour, IControllable
         _speedBoost = playerData.SpeedBoost;
         _beginMoveSpeed = playerData.MoveSpeed;
         _jumpHeight = playerData.JumpHeight;
-        _moveSpeed = _beginMoveSpeed;
+        moveSpeed = _beginMoveSpeed;
     }
 
     void Update()
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour, IControllable
 
     private void MovePlayer()
     {
-        Vector3 movement = _moveDirection * _moveSpeed;
+        Vector3 movement = _moveDirection * moveSpeed;
 
         movement.y = verticalVelocity;
             
@@ -70,45 +70,53 @@ public class PlayerMovement : MonoBehaviour, IControllable
     }
     private void AnimateMoving()
     {
-        if (_moveDirection.x > 0)
+        bool isMoving = _moveDirection.x != 0;
+
+        if (!isMoving)
         {
-            if (_isSprinting)
-            {
-                _playerAnimator.SetInteger("RunBack", 0);
-                _playerAnimator.SetInteger("RunFoward", 1);
-            }
-            else
-            {
-                _playerAnimator.SetInteger("GoBack", 0);
-                _playerAnimator.SetInteger("GoFoward", 1);
-            }
+            ResetAnimationMoving();
+            return;
         }
-        else if (_moveDirection.x < 0)
+        
+        RotatePlayer();
+        
+        if (_isSprinting)
         {
-            if (_isSprinting)
-            {
-                _playerAnimator.SetInteger("RunBack", 1);
-                _playerAnimator.SetInteger("RunFoward", 0);
-            }
-            else
-            {
-                _playerAnimator.SetInteger("GoBack", 1);
-                _playerAnimator.SetInteger("GoFoward", 0);
-            }
+            _playerAnimator.SetInteger("RunFoward", 1);
+            _playerAnimator.SetInteger("GoFoward", 1);
         }
         else
-        {
-            _moveSpeed = _beginMoveSpeed;
-            _playerAnimator.SetInteger("GoBack", 0);
-            _playerAnimator.SetInteger("GoFoward", 0);
-            _playerAnimator.SetInteger("RunBack", 0);
-            _playerAnimator.SetInteger("RunFoward", 0);
-        }
+            _playerAnimator.SetInteger("GoFoward", 1);
     }
 
     public void Sprint()
     {
-        _isSprinting = !_isSprinting;
-        _moveSpeed *= _speedBoost;
+        moveSpeed = _beginMoveSpeed * _speedBoost;
+        _isSprinting = true;
+    }
+
+    public void StopSprint()
+    {
+        ResetAnimationMoving();
+        moveSpeed = _beginMoveSpeed;
+        _isSprinting = false;
+    }
+
+    private void ResetAnimationMoving()
+    {
+        _playerAnimator.SetInteger("GoFoward", 0);
+        _playerAnimator.SetInteger("RunFoward", 0);
+    }
+
+    private void RotatePlayer()
+    {
+        if (_moveDirection.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (_moveDirection.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
     }
 }
