@@ -1,12 +1,10 @@
 using ScriptableObjects;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IControllable
 {
     [SerializeField] private PlayerData playerData;
-    [SerializeField] private float verticalVelocity;
-    [SerializeField] private float gravityForce;
     [SerializeField] private float moveSpeed;
     
     private float _beginMoveSpeed;
@@ -14,7 +12,7 @@ public class PlayerMovement : MonoBehaviour, IControllable
     private float _jumpHeight;
     private bool _isSprinting;
     
-    private CharacterController _controller;
+    private Rigidbody _playerRb;
     private Vector3 _moveDirection;
     private Animator _playerAnimator;
         
@@ -22,7 +20,7 @@ public class PlayerMovement : MonoBehaviour, IControllable
     private void Awake()
     {
         _playerAnimator = GetComponent<Animator>();
-        _controller  = GetComponent<CharacterController>();
+        _playerRb = GetComponent<Rigidbody>();
         
         _speedBoost = playerData.SpeedBoost;
         _beginMoveSpeed = playerData.MoveSpeed;
@@ -30,9 +28,8 @@ public class PlayerMovement : MonoBehaviour, IControllable
         moveSpeed = _beginMoveSpeed;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        DoGravity();
         MovePlayer();
     }
         
@@ -43,30 +40,13 @@ public class PlayerMovement : MonoBehaviour, IControllable
 
     private void MovePlayer()
     {
-        Vector3 movement = _moveDirection * moveSpeed;
-
-        movement.y = verticalVelocity;
-            
-        _controller.Move(movement * Time.deltaTime);
+        _playerRb.AddForce(_moveDirection.x * moveSpeed, 0f, 0f);
         AnimateMoving();
-    }
-        
-    private void DoGravity()
-    {
-        if (_controller.isGrounded && verticalVelocity < 0)
-        {
-            verticalVelocity = -5;
-        }
-
-        verticalVelocity += gravityForce * Time.deltaTime;
     }
 
     public void Jump()
     {
-        if (_controller.isGrounded)
-        {
-            verticalVelocity = Mathf.Sqrt(_jumpHeight * -2 * gravityForce);
-        }
+        _playerRb.AddForce(0f, _jumpHeight, 0f);
     }
     private void AnimateMoving()
     {
@@ -86,7 +66,11 @@ public class PlayerMovement : MonoBehaviour, IControllable
             _playerAnimator.SetInteger("GoFoward", 1);
         }
         else
+        {
+            _playerAnimator.SetInteger("RunFoward", 0);
             _playerAnimator.SetInteger("GoFoward", 1);
+        }
+            
     }
 
     public void Sprint()
